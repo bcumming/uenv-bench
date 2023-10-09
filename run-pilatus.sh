@@ -23,12 +23,12 @@ N="$2"
 
 build_path=$(realpath $build_path)
 
-numnodes=$(python3 -c "print(($N+1)//2)")
+nodes=$(python3 -c "print(($N+1)//2)")
 echo ================================================
-echo == running $N instances on $numnodes nodes in $build_path
+echo == running $N instances on $nodes nodes in $build_path
 echo
 
 rm -rf "$build_path/log*"
-srun -Cmc -Acsstaff -n$N -N$numnodes ./task.sh $build_path 2
+srun -Cmc -Acsstaff -n$N -N$nodes -C128 ./task.sh $build_path 2
 
 grep "^== TIMING" $build_path/log*

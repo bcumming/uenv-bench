@@ -41,10 +41,12 @@ start_ts=$(date +"%s")
 echo numactl --cpunodebind=$NUMANODES --membind=$NUMANODES env --ignore-environment PATH=/usr/bin:/bin:$(pwd)/spack/bin make store.squashfs -j$JOBWIDTH >> $logfile 2>&1
 
 pwd >> $logfile
-numactl --cpunodebind=$NUMANODES --membind=$NUMANODES pwd >> $logfile 2>&1
-numactl --cpunodebind=$NUMANODES --membind=$NUMANODES env --ignore-environment PATH=/usr/bin:/bin:$(pwd)/spack/bin pwd >> $logfile 2>&1
+#numactl --cpunodebind=$NUMANODES --membind=$NUMANODES pwd >> $logfile 2>&1
+#numactl --cpunodebind=$NUMANODES --membind=$NUMANODES env --ignore-environment PATH=/usr/bin:/bin:$(pwd)/spack/bin pwd >> $logfile 2>&1
 
-#numactl --cpunodebind=$NUMANODES --membind=$NUMANODES env --ignore-environment PATH=/usr/bin:/bin:$(pwd)/spack/bin make store.squashfs -j$JOBWIDTH >> $logfile 2>&1
+echo "== node: $(hostname)" >> $logfile
+echo env --ignore-environment PATH=/usr/bin:/bin:$(pwd)/spack/bin make store.squashfs -j$JOBWIDTH >> $logfile 2>&1
+env --ignore-environment PATH=/usr/bin:/bin:$(pwd)/spack/bin make store.squashfs -j$JOBWIDTH >> $logfile 2>&1
 
 end_ts=$(date +"%s")
 echo "== STOPPING $(date)" >> $logfile 2>&1

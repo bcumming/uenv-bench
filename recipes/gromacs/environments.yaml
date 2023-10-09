@@ -9,7 +9,6 @@ gromacs:
   specs:
   - cmake
   - gromacs@2023.1 +blas +lapack +hwloc
-  - gromacs@2022.5 +plumed +blas +lapack +hwloc
   - hwloc
   - fftw
   - openblas
@@ -19,12 +18,6 @@ gromacs:
   views:
     develop:
       exclude: ['gromacs']
-    gromacs:
-      exclude: ['gromacs+plumed']
-      link: run
-    plumed:
-      exclude: ['gromacs@2023.1']
-      link: run
   packages:
   - perl
 
