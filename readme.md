@@ -20,4 +20,9 @@ The above will build 10 separate build paths, which can then be run concurrently
 
 The idea is to run a SLURM job that will launch N build jobs on N sockets, and measure time to build the environments.
 
-*TODO*: I will set this up when Pilatus is available again.
+A runner script has been created for Pilatus, that runs 2 build jobs per node (one per socket).
+The following will run 10 builds concurrently, using the configuration generated above, on 5 nodes.
+
+```
+./run-pilatus.sh $SCRATCH/uenv-benchmark 10
+```
