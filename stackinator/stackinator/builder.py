@@ -145,9 +145,13 @@ class Builder:
         if not (spack_path / ".git").is_dir():
             self._logger.info(f'spack: clone repository {spack["repo"]}')
 
+            git_cli_args = ["git", "clone", spack["repo"], spack_path]
+            if spack["commit"]:
+                git_cli_args += ["--depth=1", f"-b{spack['commit']}"]
+
             # clone the repository
             capture = subprocess.run(
-                ["git", "clone", spack["repo"], spack_path],
+                git_cli_args,
                 shell=False,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -156,23 +160,6 @@ class Builder:
 
             if capture.returncode != 0:
                 self._logger.debug(f'error cloning the repository {spack["repo"]}')
-                capture.check_returncode()
-
-        # Check out a branch or commit if one was specified
-        if spack["commit"]:
-            self._logger.info(f'spack: checkout branch/commit {spack["commit"]}')
-            capture = subprocess.run(
-                ["git", "-C", spack_path, "checkout", spack["commit"]],
-                shell=False,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-            )
-            self._logger.debug(capture.stdout.decode("utf-8"))
-
-            if capture.returncode != 0:
-                self._logger.debug(
-                    f'unable to change to the requested commit {spack["commit"]}'
-                )
                 capture.check_returncode()
 
         # load the jinja templating environment

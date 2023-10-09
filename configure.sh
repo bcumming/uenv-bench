@@ -24,16 +24,23 @@ N="$2"
 vcluster="$3"
 
 build_path=$(realpath $build_path)
-echo build_path=$build_path
-echo N=$N
-echo vcluster=$vcluster
+
+echo ================================================
+echo == building $N instances for $vcluster
+echo == targets: $build_path
+echo
 
 # set up stackinator
-echo = configure stackinator
-
-(cd stackinator; ./bootstrap.sh) 2>&1 > configure_log
+echo ================================================
+echo == initialising stackinator
+echo
+(cd stackinator; ./bootstrap.sh) 2>&1 > log_configure
 export PATH=$(pwd)/stackinator/bin:$PATH
 
+echo
 for i in $(seq 1 $N); do
-    echo stack-config -s ./alps-cluster-config/$vcluster -s ${build_path}/${i}
+    bpath=${build_path}/${i}
+    echo ================================================
+    echo "==  ($i of $N): $bpath"
+    stack-config -s $(pwd)/alps-cluster-config/$vcluster -b$bpath  -r $(pwd)/recipes/gromacs
 done
