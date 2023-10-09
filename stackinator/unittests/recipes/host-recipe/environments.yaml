@@ -1,0 +1,25 @@
+gcc-env:
+  compiler:
+      - toolchain: gcc
+        spec: gcc@11.3.0
+  unify: true
+  specs:
+  - cmake
+  - osu-micro-benchmarks@5.9
+  - hdf5 +mpi
+  - python@3.10
+  - tree
+  - libtree
+  mpi:
+    spec: cray-mpich
+    gpu: false
+  views:
+    default:
+    run:
+      link: run
+    roots:
+      link: roots
+    no-python:
+      exclude:
+        - python
+
