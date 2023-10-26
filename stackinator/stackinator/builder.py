@@ -36,12 +36,14 @@ class Builder:
         if parts[1] == "tmp":
             raise IOError("build path can't be in '/tmp'")
 
+        # NOTE: we remove this feature for the benchmark
+
         # the build path can't be in $HOME because the build step rebinds $HOME
         # NOTE that this would be much easier to determine with PosixPath.is_relative_to
         # introduced in Python 3.9.
-        home_parts = pathlib.Path.home().parts
-        if (len(home_parts) <= len(parts)) and (home_parts == parts[: len(home_parts)]):
-            raise IOError("build path can't be in '$HOME' or '~'")
+        #home_parts = pathlib.Path.home().parts
+        #if (len(home_parts) <= len(parts)) and (home_parts == parts[: len(home_parts)]):
+        #   raise IOError("build path can't be in '$HOME' or '~'")
         # if path.is_relative_to(pathlib.Path.home()):
         # raise IOError("build path can't be in '$HOME' or '~'")
 

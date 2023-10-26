@@ -19,7 +19,6 @@ STORE := {{ store }}
 # $(STORE). Use `bwrap-mutable-root.sh` in case you need to create a new
 # directory at the root /.
 SANDBOX := $(SOFTWARE_STACK_PROJECT)/bwrap-mutable-root.sh $\
-	--tmpfs ~ $\
 	--bind $(SOFTWARE_STACK_PROJECT)/tmp /tmp $\
 	--bind $(SOFTWARE_STACK_PROJECT)/store $(STORE)
 
